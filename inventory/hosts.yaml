@@ -1,0 +1,28 @@
+## Configure 'ip' variable to bind kubernetes services on a
+## different ip than the default iface
+node1 ansible_host=20.220.171.182 ip=10.0.0.5 #ip=20.220.171.182 
+node2 ansible_host=20.116.216.192 ip=10.0.0.6 #ip=20.116.216.192 
+node3 ansible_host=20.220.170.87 ip=10.0.0.4 #ip=20.220.170.87
+#node4 ansible_host=95.54.0.15 ip=10.3.0.4
+#node5 ansible_host=95.54.0.16 ip=10.3.0.5
+#node6 ansible_host=95.54.0.17 ip=10.3.0.6
+
+[kube_control_plane]
+node1
+#node2
+
+[etcd]
+node1
+node2
+node3
+
+[kube_node]
+node2
+node3
+#node4
+#node5
+#node6
+
+[k8s_cluster:children]
+kube_node
+kube_control_plane
